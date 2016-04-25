@@ -1,11 +1,6 @@
 ﻿using NSBUnityError.Commands;
 using NServiceBus;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSBUnityError.Sender
 {
@@ -15,7 +10,7 @@ namespace NSBUnityError.Sender
 
 		static void Main(string[] args)
 		{
-			_bus = EndpointConfig.GetBus(EndpointConfig.GetConfiguration("someConnectionString", "someOtherConnectionString", ConfigurationManager.ConnectionStrings["ServiceBusConnectionString"].ConnectionString));
+			_bus = EndpointConfig.GetBus(EndpointConfig.GetConfiguration("someConnectionString", "someOtherConnectionString", Environment.GetEnvironmentVariable("AzureServiceBus.ConnectionString")));
 
 			Console.WriteLine("Bus started.");
 
