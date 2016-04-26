@@ -1,10 +1,6 @@
 ﻿using NSBUnityError.Commands;
 using NServiceBus.Saga;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSBUnityError.Host
 {
@@ -14,6 +10,7 @@ namespace NSBUnityError.Host
 		public void Handle(TestCommand message)
 		{
 			Console.WriteLine("Received TestCommand");
+			MarkAsComplete();
 		}
 
 		protected override void ConfigureHowToFindSaga(SagaPropertyMapper<TestSagaData> mapper)

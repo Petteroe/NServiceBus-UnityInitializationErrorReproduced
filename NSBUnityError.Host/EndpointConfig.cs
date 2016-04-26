@@ -1,14 +1,11 @@
 ﻿using Microsoft.Practices.Unity;
 using NServiceBus;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NSBUnityError.Host
 {
-	public class EndpointConfig : IConfigureThisEndpoint, AsA_Worker
+	using System;
+
+    public class EndpointConfig : IConfigureThisEndpoint, AsA_Worker
 	{
 		public void Customize(BusConfiguration configuration)
 		{
@@ -18,7 +15,7 @@ namespace NSBUnityError.Host
 
 			configuration.ScaleOut().UseSingleBrokerQueue();
 
-			configuration.UseTransport<AzureServiceBusTransport>();
+			configuration.UseTransport<AzureServiceBusTransport>().ConnectionString(Environment.GetEnvironmentVariable("AzureServiceBus.ConnectionString"));
 			configuration.UsePersistence<AzureStoragePersistence>();
 
 		}
@@ -28,6 +25,8 @@ namespace NSBUnityError.Host
 			var container = new UnityContainer();
 
 			// Register our own components here
+
+//			container.RegisterType<ISagaPersister, AzureSagaPersister>(new InjectionConstructor(CloudStorageAccount.DevelopmentStorageAccount, true));
 
 			return container;
 		}
